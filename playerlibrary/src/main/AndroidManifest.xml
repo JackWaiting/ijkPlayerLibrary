@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.platomix.lib.playerengine">
+
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO"
+        tools:ignore="ProtectedPermissions" />
+
+    <application>
+
+        <service android:name="com.platomix.lib.playerengine.core.local.PlayerService" />
+
+        <!-- 点击notification广播  -->
+        <receiver android:name="com.platomix.lib.playerengine.core.local.BringToFrontReceiver" >
+        </receiver>
+        <receiver
+            android:name="com.platomix.lib.playerengine.core.local.MediaButtonIntentReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+
+
+
+
+</manifest>

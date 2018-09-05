@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- 显示歌曲图片。必须存在为此id的ImageView或其子类 -->
+    <ImageView
+        android:id="@+id/iv_music_cover"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/notification_default_cover_mini"
+        android:scaleType="centerCrop"
+         />
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/iv_music_cover"
+         >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/contorl_layout"
+            android:paddingLeft="10dp" >
+			<!-- 显示歌曲名称。必须存在为此id的TextView或其子类 -->
+            <TextView
+                android:id="@+id/tv_music_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#2E1B1F"
+                android:text="@string/app_name"
+                android:gravity="left"
+                android:layout_marginRight="20dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                />
+			<!-- 显示歌曲作者。必须存在为此id的TextView或其子类 -->
+            <TextView
+                android:id="@+id/tv_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:textSize="12sp"
+                android:text="@string/keep_radio_on"
+                android:gravity="left"
+                android:textColor="#A0A0A0"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contorl_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+             >
+            <!-- 上一曲按钮。必须存在为此id的ImageView或其子类 -->
+            <ImageView
+                android:id="@+id/btn_pre_music"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_notification_player_prev"
+                />
+
+            <!-- 播放/暂停按钮。必须存在为此id的ImageView或其子类 -->
+            <ImageView
+                android:id="@+id/btn_play_pause"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_notification_player_play"
+                />
+
+            <!-- 下一曲按钮。必须存在为此id的ImageView或其子类 -->
+            <ImageView
+                android:id="@+id/btn_next_music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/btn_notification_player_next"
+                />
+
+            <!-- 关闭按钮。必须存在为此id的ImageView或其子类 -->
+            <ImageView
+                android:id="@+id/btn_destroy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/btn_notification_player_hidden"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
