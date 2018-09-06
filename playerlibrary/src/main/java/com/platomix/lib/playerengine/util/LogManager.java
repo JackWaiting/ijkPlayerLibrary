@@ -9,12 +9,12 @@ import java.util.Set;
 public final class LogManager {
     public static final class Configuration {
 
-        public static final boolean SWITCH_LOG_LEVEL_VERBOSE = false;
-        public static final boolean SWITCH_LOG_LEVEL_DEBUG = false;
-        public static final boolean SWITCH_LOG_LEVEL_INFO = false;
-        public static final boolean SWITCH_LOG_LEVEL_WARN = false;
-        public static final boolean SWITCH_LOG_LEVEL_ERROR = false;
-        public static final boolean SWITCH_LOG_LEVEL_WTF = false;
+        public static final boolean SWITCH_LOG_LEVEL_VERBOSE = true;
+        public static final boolean SWITCH_LOG_LEVEL_DEBUG = true;
+        public static final boolean SWITCH_LOG_LEVEL_INFO = true;
+        public static final boolean SWITCH_LOG_LEVEL_WARN = true;
+        public static final boolean SWITCH_LOG_LEVEL_ERROR = true;
+        public static final boolean SWITCH_LOG_LEVEL_WTF = true;
     }
 
     private static LogManager sLogManager = new LogManager();

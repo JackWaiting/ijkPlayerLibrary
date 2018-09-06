@@ -151,6 +151,9 @@ public class PlayerService extends Service implements OnPlayStateChangeListener 
             playerEngine.prev();
             focusHelper.requestFocus();
             isUserPause = false;
+        } else if (Command.ACTION_REAL_PLAY.equals(action)) {
+            String url = intent.getStringExtra(Extra.EXTRA_URL);
+            playerEngine.setRealPlay(url);
         } else if (Command.ACTION_SKIP_TO.equals(action)) {
             int index = intent.getIntExtra(Extra.EXTRA_SKIP_INDEX, 0);
             playerEngine.skipTo(index);
@@ -164,12 +167,10 @@ public class PlayerService extends Service implements OnPlayStateChangeListener 
             float rightVolume = intent.getFloatExtra(Extra.EXTRA_RIGHT_VOLUME, 1);
             playerEngine.setVolume(leftVolume, rightVolume);
         } else if (Command.ACTION_TOGGLE_PLAY.equals(action)) {
-
-
             isUserPause = !playerEngine.toggle();
-            LogManager.i("","我开始播放暂停" + isUserPause + "------");
+            LogManager.i("", "我开始播放暂停" + isUserPause + "------");
             focusHelper.requestFocus();
-        }else if (Command.ACTION_DEVICE_TOGGLE_PLAY.equals(action)) {
+        } else if (Command.ACTION_DEVICE_TOGGLE_PLAY.equals(action)) {
             mNotificationAdapter.setNotificationSongToggle();
         } else if (Command.ACTION_WAKE_MODE.equals(action)) {
             playerEngine.setWakeMode();
@@ -180,7 +181,7 @@ public class PlayerService extends Service implements OnPlayStateChangeListener 
             playerEngine.setPlayNextWhenError(player.isPlaynextWhenError());
         } else if (Command.ACTION_SPEED.equals(action)) {
             float speed = intent.getFloatExtra(Extra.EXTRA_SPEED, 1);
-            LogManager.i("","我改变了倍数" + speed + "------");
+            LogManager.i("", "我改变了倍数" + speed + "------");
             playerEngine.setSpeed(speed);
         }
         focusHelper.setIsUserPause(isUserPause);
@@ -262,7 +263,7 @@ public class PlayerService extends Service implements OnPlayStateChangeListener 
             boolean interUpt = onNotificationButtonClick(action);
 
             if (!interUpt) {
-                if(mNotificationAdapter != null){
+                if (mNotificationAdapter != null) {
                     if (Command.ACTION_NEXT.equals(action)) {
                         /*playerEngine.next();
                         focusHelper.requestFocus();*/
@@ -365,7 +366,7 @@ public class PlayerService extends Service implements OnPlayStateChangeListener 
         }
         dismissNotification();
         player = null;
-        if(playerEngine != null){
+        if (playerEngine != null) {
             playerEngine.stop();
             playerEngine = null;
         }

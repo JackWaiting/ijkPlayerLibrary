@@ -15,8 +15,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.platomix.lib.playerengine.core.PlayerEngine;
 import com.platomix.lib.playerengine.core.local.MediaButtonIntentReceiver;
+import com.platomix.lib.playerengine.core.local.PlayerEngine;
 
 public class AudioHelper implements OnAudioFocusChangeListener {
 	public static final String TAG = "AudioHelper";

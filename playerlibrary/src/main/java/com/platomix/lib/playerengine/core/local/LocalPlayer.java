@@ -13,7 +13,6 @@ import com.platomix.lib.playerengine.api.Playlist;
 import com.platomix.lib.playerengine.command.CommandFactory;
 import com.platomix.lib.playerengine.command.CommandFactory.Command;
 import com.platomix.lib.playerengine.command.CommandFactory.Extra;
-import com.platomix.lib.playerengine.core.PlayerEngine;
 import com.platomix.lib.playerengine.core.PlayerListener;
 import com.platomix.lib.playerengine.util.MusicLoader;
 
@@ -352,6 +351,13 @@ public final class LocalPlayer implements PlayerEngine {
         Map<String, Object> map = getExtraMap();
         map.put(Extra.EXTRA_SPEED, speed);
         commandFactory.sendCommand(Command.ACTION_SPEED, map);
+    }
+
+    @Override
+    public void setRealPlay(String url) {
+        Map<String, Object> map = getExtraMap();
+        map.put(Extra.EXTRA_URL, url);
+        commandFactory.sendCommand(Command.ACTION_REAL_PLAY, map);
     }
 
     private boolean playnextWhenError = false;

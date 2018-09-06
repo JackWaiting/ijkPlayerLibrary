@@ -141,4 +141,6 @@ public interface PlayerEngine {
     boolean isFadeVolumeWhenStartOrPause();
 
     void setSpeed(float speed);
+
+    void setRealPlay(String url);
 }

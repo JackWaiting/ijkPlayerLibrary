@@ -118,7 +118,11 @@ public final class CommandFactory {
 		 * 发送Speed
 		 */
 		public static final String EXTRA_SPEED = "speed";
-		
+
+		/**
+		 * 发送Speed
+		 */
+		public static final String EXTRA_URL = "url";
 	}
 	
 	public static class Command{
@@ -126,6 +130,12 @@ public final class CommandFactory {
 		 * 播放
 		 */
 		public static final String ACTION_PLAY = "com.jackwaiting.play";
+
+		/**
+		 * 播放
+		 */
+		public static final String ACTION_REAL_PLAY = "com.jackwaiting.real.play";
+
 		/**
 		 * 停止
 		 */
@@ -189,9 +199,6 @@ public final class CommandFactory {
 		public static final String ACTION_SPEED = "com.jackwaiting.speed";
 
 
-		/**
-		 * 
-		 */
 		public static final String ACTION_FADE_VOLUME = "com.jackwaiting.fade_volume";
 		
 		public static final String ACTION_MEDIA_BUTTON_RECEIVER = "com.jackwaiting.mediabuttonReceiver";

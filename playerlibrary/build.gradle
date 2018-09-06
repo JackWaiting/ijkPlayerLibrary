@@ -36,10 +36,11 @@ publish {
     userOrg = 'jackwaiting'//bintray.com用户名
     groupId = 'com.jackwaiting.music.player.lib'//jcenter上的路径
     artifactId = 'ijkPlayerLibrary'//项目名称
-    publishVersion = '1.0.2'//版本号
+    publishVersion = '1.0.7'//版本号
     desc = 'this is for ijkPlayerLibrary'//描述，不重要
     website = 'https://github.com/JackWaiting/ijkPlayerLibrary'//网站，最好有，不重要
-    
+    bintrayUser = 'jackwaiting'
+    bintrayKey = 'a34081342aa4b8555c497a6f4db6ce18fdf9af6c'
     dryRun = false
 }
 

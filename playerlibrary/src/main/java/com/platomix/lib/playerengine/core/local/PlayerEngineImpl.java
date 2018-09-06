@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.platomix.lib.playerengine.api.PlaybackMode;
 import com.platomix.lib.playerengine.api.Playlist;
-import com.platomix.lib.playerengine.core.PlayerEngine;
 import com.platomix.lib.playerengine.core.PlayerListener;
 import com.platomix.lib.playerengine.util.LogManager;
 
@@ -249,6 +248,8 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
         }
     }
 
+    private boolean isRealPlay = false;
+
     /**
      * 开始播放
      *
@@ -257,33 +258,12 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
     private void start(String uri) {
         currentMediaPlayer.internalPlaylist = playList;
         currentMediaPlayer.uri = uri;
+        isRealPlay = false;
         if (playerListener != null) {
-            playerListener.onTrackChanged(uri);
+            playerListener.onTrackHold(uri);
         }
     }
 
-    private void realStart(String uri){
-        if (playerListener != null) {
-            playerListener.onTrackChanged(uri);
-        }
-        try {
-            LogManager.d("URI", uri);
-            //
-            //currentMediaPlayer.reset();
-            initMediaPlayer();
-            currentMediaPlayer.setDataSource(uri);
-            currentMediaPlayer.preparing = true;
-            currentMediaPlayer.prepareAsync();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public boolean isLocalPlaying() {
@@ -342,15 +322,18 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
             if (currentMediaPlayer.preparing) {
                 return;
             }if (!currentMediaPlayer.isPlaying()) {
-                currentMediaPlayer.start();
+                if(isRealPlay){
+                    currentMediaPlayer.start();
+                    if (playerListener != null) {
+                        LogManager.e("LocalPlayListener", "我走了这个onResume" + playList.getSelectedUri());
+                        playerListener.onTrackStart(playList.getSelectedUri());
+                    }
+                    if (playStateListener != null) {
+                        playStateListener.onPlayStateChange(true);
+                    }
+                }
                 //play(playList.getSelectedUri(), false);
-                if (playerListener != null) {
-                    LogManager.e("LocalPlayListener", "我走了这个onResume" + playList.getSelectedUri());
-                    playerListener.onTrackStart(playList.getSelectedUri());
-                }
-                if (playStateListener != null) {
-                    playStateListener.onPlayStateChange(true);
-                }
+
             }
         } else {
             play();
@@ -699,6 +682,33 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
             onStartBuffer(playList.getSelectedUri());
             start(playList.getSelectedUri());
 
+        }
+    }
+
+    @Override
+    public void setRealPlay(String url) {
+        isRealPlay = true;
+        currentMediaPlayer.internalPlaylist = playList;
+        currentMediaPlayer.uri = url;
+        if (playerListener != null) {
+            playerListener.onTrackChanged(url);
+        }
+        try {
+            LogManager.d("URI", url);
+            //
+            //currentMediaPlayer.reset();
+            initMediaPlayer();
+            currentMediaPlayer.setDataSource(url);
+            currentMediaPlayer.preparing = true;
+            currentMediaPlayer.prepareAsync();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
