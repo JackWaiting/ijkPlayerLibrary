@@ -83,10 +83,10 @@ public class MediaButtonIntentReceiver extends BroadcastReceiver {
 				Log.e(TAG, "action-->"+action);
 				Log.i(TAG, "KeyEvent.ACTION_DOWN");
 				Log.i(TAG, "RepeatCount:"+event.getRepeatCount());
-				/*if (event.getRepeatCount() == 0) {
+				if (event.getRepeatCount() == 0) {
 					// 发一个广播出去
 					onReceiveCommand(context, command);
-				} */
+				}
 //				if (action == KeyEvent.ACTION_DOWN) {
 //					Log.i(TAG, "KeyEvent.ACTION_DOWN");
 //					Log.i(TAG, "RepeatCount:"+event.getRepeatCount());
