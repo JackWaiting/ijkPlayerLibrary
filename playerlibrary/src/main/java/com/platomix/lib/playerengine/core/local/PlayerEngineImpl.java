@@ -200,32 +200,6 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
 
     }
 
-    /**
-     * 播放链接
-     *
-     * @param uri     本地或远程地址
-     * @param restart 如果是同一个链接，是否重新播放
-     */
-    private void play(String uri, boolean restart) {
-        LogManager.i(TAG, "我走了这个play");
-
-        if (!TextUtils.isEmpty(uri)) {
-            if (currentMediaPlayer != null) {
-                if (!uri.equals(currentMediaPlayer.uri) || restart) {
-                    cleanUp();
-                    currentMediaPlayer = build();
-                    onStartBuffer(uri);
-                    start(uri);
-                } else {
-                    resume();
-                }
-            } else {
-                currentMediaPlayer = build();
-                onStartBuffer(uri);
-                start(uri);
-            }
-        }
-    }
 
     private void onStartBuffer(String uri) {
         LogManager.i(TAG, "onStartBuffer" + bufferdPercent);
@@ -321,8 +295,9 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
         if (currentMediaPlayer != null) {
             if (currentMediaPlayer.preparing) {
                 return;
-            }if (!currentMediaPlayer.isPlaying()) {
-                if(isRealPlay){
+            }
+            if (!currentMediaPlayer.isPlaying()) {
+                if (isRealPlay) {
                     currentMediaPlayer.start();
                     if (playerListener != null) {
                         LogManager.e("LocalPlayListener", "我走了这个onResume" + playList.getSelectedUri());
@@ -601,7 +576,7 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
 
         }
 
-        public void setSpeed(IMediaPlayer backEndMediaPlayer){
+        public void setSpeed(IMediaPlayer backEndMediaPlayer) {
             new InternalMediaPlayer(backEndMediaPlayer);
 
         }
@@ -620,17 +595,23 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
 
         @Override
         public void start() {
-            LogManager.i("看看值", "我执行了外部的start");
-            pause = false;
-            super.setVolume(currentVolumeValue, currentVolumeValue);
-            super.start();
-            if (isFadeVolume) {
-                handler.removeCallbacks(volumeRunnable);
-                currentVolumeValue = Math.max(0, currentVolumeValue);
-                handler.post(volumeRunnable);
-            } else {
-                super.setVolume(1, 1);
+
+            try {
+                LogManager.i("看看值", "我执行了外部的start");
+                pause = false;
+                super.setVolume(currentVolumeValue, currentVolumeValue);
+                super.start();
+                if (isFadeVolume) {
+                    handler.removeCallbacks(volumeRunnable);
+                    currentVolumeValue = Math.max(0, currentVolumeValue);
+                    handler.post(volumeRunnable);
+                } else {
+                    super.setVolume(1, 1);
+                }
+            }catch (Exception ignored){
+                LogManager.d("start异常了");
             }
+
         }
 
         @Override
@@ -695,12 +676,18 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
         }
         try {
             LogManager.d("URI", url);
-            //
-            //currentMediaPlayer.reset();
-            initMediaPlayer();
-            currentMediaPlayer.setDataSource(url);
-            currentMediaPlayer.preparing = true;
-            currentMediaPlayer.prepareAsync();
+            if (!url.equals(currentMediaPlayer.uri)) {
+                initMediaPlayer();
+                currentMediaPlayer.setDataSource(url);
+                currentMediaPlayer.preparing = true;
+                currentMediaPlayer.prepareAsync();
+            } else {
+                initMediaPlayer();
+                currentMediaPlayer.setDataSource(url);
+                currentMediaPlayer.preparing = true;
+                currentMediaPlayer.prepareAsync();
+                resume();
+            }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
@@ -709,6 +696,33 @@ class PlayerEngineImpl implements PlayerEngine, IMediaPlayer.OnBufferingUpdateLi
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 播放链接
+     *
+     * @param uri     本地或远程地址
+     * @param restart 如果是同一个链接，是否重新播放
+     */
+    private void play(String uri, boolean restart) {
+        LogManager.i(TAG, "我走了这个play");
+
+        if (!TextUtils.isEmpty(uri)) {
+            if (currentMediaPlayer != null) {
+                if (!uri.equals(currentMediaPlayer.uri) || restart) {
+                    cleanUp();
+                    currentMediaPlayer = build();
+                    onStartBuffer(uri);
+                    start(uri);
+                } else {
+                    resume();
+                }
+            } else {
+                currentMediaPlayer = build();
+                onStartBuffer(uri);
+                start(uri);
+            }
         }
     }
 

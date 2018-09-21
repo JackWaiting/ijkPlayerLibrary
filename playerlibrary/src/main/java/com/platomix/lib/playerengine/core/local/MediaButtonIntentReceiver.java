@@ -124,7 +124,6 @@ public class MediaButtonIntentReceiver extends BroadcastReceiver {
 				} else {
 					Log.d(TAG, "action up, keycode = " + keycode);
 					mDown = false;
-					
 				}
 			}
 		}
